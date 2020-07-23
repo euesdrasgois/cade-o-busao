@@ -16,10 +16,14 @@ const buses = {
 sockets.on("connection", (socket) => {
     console.log("Connected");
     socket.emit("buses", buses);
-});
 
-sockets.on("disconnect", (socket) => {
-    console.log("> User Disconnected");
+    socket.on("driver-update", (socket, localization) => {
+        buses[socket.id] = localization;
+    });
+
+    sockets.on("disconnect", (socket) => {
+        console.log("> User Disconnected");
+    });
 });
 
 server.listen(port, () => console.log("Server listening on port: " + port));
