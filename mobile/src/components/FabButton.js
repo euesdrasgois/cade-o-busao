@@ -7,24 +7,24 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-export default class FabButton extends Component {
-    render() {
-        return (
-            <View style={[styles.container, this.props.style]}>
-                <TouchableWithoutFeedback>
-                    <Animated.View style={[styles.button, styles.menu]}>
-                        <Entypo name="menu" size={24} color="#fff" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
-            </View>
-        );
-    }
-}
+const FabButton = () => {
+    return (
+        <View style={styles.container}>
+            <TouchableWithoutFeedback>
+                <Animated.View style={styles.button}>
+                    <Entypo name="menu" size={24} color="#fff" />
+                </Animated.View>
+            </TouchableWithoutFeedback>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         alignContent: "center",
         position: "absolute",
+        top: 10,
+        left: 10,
     },
     button: {
         position: "absolute",
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
         shadowOffset: {
             height: 10,
         },
-    },
-    menu: {
         backgroundColor: "#ff9d00",
     },
 });
+
+export default FabButton;

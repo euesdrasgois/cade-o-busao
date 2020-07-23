@@ -8,10 +8,10 @@ import Map from "./src/components/Map";
 export default function App() {
     return (
         <View style={styles.container}>
-            <FabButton style={{ top: 40, left: 20 }} />
+            <FabButton />
             <Map />
             <Drawer />
-            <StatusBar style="auto" />
+            <StatusBar translucent={false} backgroundColor="#ececec" />
         </View>
     );
 }
