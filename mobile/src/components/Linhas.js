@@ -1,25 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 // import { Container } from './styles';
 
-const Linhas = () => {
-    const state = [
-        {
-            chegada: "18:00",
-            linha: "255",
-            saida: "19:00",
-        },
-        {
-            chegada: "18:00",
-            linha: "255",
-            saida: "19:00",
-        },
-    ];
+const Linhas = (stateLines) => {
+    var stateLine = stateLines.stateLines.stateLines;
+    const state = [];
+    stateLine.map((line) => {
+        state.push(line);
+    });
 
     const renderState = state.map((line) => {
         return (
-            <View style={styles.linha}>
+            <View key={line.key} style={styles.linha}>
                 <Text style={styles.horario}>{line.chegada}</Text>
                 <Text style={styles.nLinha}>{line.linha}</Text>
                 <Text style={styles.horario}>{line.saida}</Text>
@@ -31,6 +24,9 @@ const Linhas = () => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     linha: {
         flexDirection: "row",
         alignItems: "center",

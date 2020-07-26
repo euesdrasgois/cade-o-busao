@@ -10,7 +10,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import Linhas from "./Linhas";
 
-export default function FabSaida() {
+export default function Drawer(stateLines) {
     const [modalVisible, setModal] = useState(false);
 
     return (
@@ -30,14 +30,14 @@ export default function FabSaida() {
                                 <Text style={styles.headerText1}>Chegada</Text>
                             </View>
                             <View style={styles.headerTextBox}>
-                                <Text style={styles.headerText1}>Linha</Text>
+                                <Text style={styles.headerText2}>Linha</Text>
                             </View>
                             <View style={styles.headerTextBox}>
                                 <Text style={styles.headerText1}>Saída</Text>
                             </View>
                         </View>
                         <ScrollView style={styles.content}>
-                            <Linhas />
+                            <Linhas stateLines={stateLines} />
                         </ScrollView>
                     </View>
                     <TouchableHighlight
@@ -47,7 +47,7 @@ export default function FabSaida() {
                         }}
                         underlayColor="#a1a1a1"
                     >
-                        <AntDesign name="close" size={24} color="#fff" />
+                        <AntDesign name="close" size={24} color="#393939" />
                     </TouchableHighlight>
                 </View>
             </Modal>
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "70%",
         backgroundColor: "#fff",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
     },
     closeBtn: {
         position: "absolute",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         right: 0,
         marginTop: 5,
         marginRight: 5,
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "#fff",
     },
     modalContainer: {
         flex: 1,
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         justifyContent: "center",
-        borderBottomWidth: 2,
         marginRight: 20,
     },
     headerTextBox: {
@@ -110,13 +109,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     headerText1: {
-        fontSize: 25,
+        fontSize: 20,
         margin: 15,
         color: "#000",
     },
     headerText2: {
-        fontSize: 35,
+        fontSize: 20,
         margin: 15,
         color: "#ff9d00",
+    },
+    content: {
+        borderTopWidth: 2,
     },
 });
