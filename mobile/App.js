@@ -9,7 +9,7 @@ import io from "socket.io-client";
 export default function App() {
     const [stateLines, setStateLines] = useState([]);
     useEffect(() => {
-        const socket = io("http://132.255.194.41:5000");
+        const socket = io("http://132.255.194.205:5000");
         socket.on("setup", (lines) => {
             setStateLines(lines);
         });

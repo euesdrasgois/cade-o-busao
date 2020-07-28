@@ -26,15 +26,7 @@ export default function Drawer(stateLines) {
                 <View style={styles.modal}>
                     <View style={styles.modalContainer}>
                         <View style={styles.header}>
-                            <View style={styles.headerTextBox}>
-                                <Text style={styles.headerText1}>Chegada</Text>
-                            </View>
-                            <View style={styles.headerTextBox}>
-                                <Text style={styles.headerText2}>Linha</Text>
-                            </View>
-                            <View style={styles.headerTextBox}>
-                                <Text style={styles.headerText1}>Saída</Text>
-                            </View>
+                            <Text style={styles.appName}>Cadê o Busão?</Text>
                         </View>
                         <ScrollView style={styles.content}>
                             <Linhas stateLines={stateLines} />
@@ -103,20 +95,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginRight: 20,
+        padding: 5,
     },
-    headerTextBox: {
-        flex: 1,
-        alignItems: "center",
-    },
-    headerText1: {
-        fontSize: 20,
-        margin: 15,
-        color: "#000",
-    },
-    headerText2: {
-        fontSize: 20,
-        margin: 15,
-        color: "#ff9d00",
+    appName: {
+        fontSize: 36,
+        fontWeight: "bold",
     },
     content: {
         borderTopWidth: 2,
