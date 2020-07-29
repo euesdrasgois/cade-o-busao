@@ -31,7 +31,7 @@ const Map = (stateLines) => {
 
     const markers = buses.map((bus) => {
         return (
-            <Marker key={bus.key} coordinate={bus.coords}>
+            <Marker key={bus.linha} coordinate={bus.coords}>
                 <Image
                     style={{ width: 60, height: 60 }}
                     source={require("./../images/bus.png")}

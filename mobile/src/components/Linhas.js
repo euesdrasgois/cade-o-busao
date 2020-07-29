@@ -1,7 +1,15 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Modal,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    TouchableHighlight,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import createConverter from "./converter.js";
+import { AntDesign } from "@expo/vector-icons";
 
 // import { Container } from './styles';
 
@@ -12,61 +20,100 @@ const Linhas = (stateLines) => {
 
     for (const lineId in stateLine) {
         const line = stateLine[lineId];
-        const proxIda = Number(line.horarios.proxIda);
-        const proxVolta = Number(line.horarios.proxVolta);
         for (const idaId in line.horarios.idas) {
             const ida = Number(line.horarios.idas[idaId]);
             if (ida) {
-                const _ida = converter.numberToHours(ida);
-                line.horarios.idas[idaId] = _ida;
+                line.horarios.idas[idaId] = converter.numberToHours(ida);
             }
         }
         for (const voltaId in line.horarios.voltas) {
             const volta = Number(line.horarios.voltas[voltaId]);
             if (volta) {
-                const _volta = converter.numberToHours(volta);
-                line.horarios.voltas[voltaId] = _volta;
+                line.horarios.voltas[voltaId] = converter.numberToHours(volta);
             }
         }
-        if (proxIda) {
-            const _proxIda = converter.numberToHours(proxIda);
-            line.horarios.proxIda = _proxIda;
+        if (Number(line.horarios.proxIda)) {
+            line.horarios.proxIda = converter.numberToHours(
+                line.horarios.proxIda
+            );
         }
-
-        if (proxVolta) {
-            const _proxVolta = converter.numberToHours(proxVolta);
-            line.horarios.proxVolta = _proxVolta;
+        if (Number(line.horarios.proxVolta)) {
+            line.horarios.proxVolta = converter.numberToHours(
+                line.horarios.proxVolta
+            );
         }
-
         lines.push(line);
     }
 
     const renderState = lines.map((line) => {
+        const [modalVisible, setModal] = useState(false);
+
         return (
-            <LinearGradient
-                key={line.key}
-                colors={["#fac97a", "#fcb23a", "#ff9d00"]}
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    borderRadius: 10,
-                    marginHorizontal: 20,
-                    marginVertical: 10,
-                    paddingVertical: 10,
+            <TouchableHighlight
+                underlayColor="#cc7e00"
+                onPress={() => {
+                    setModal(true);
                 }}
+                key={line.linha}
             >
-                <Text style={styles.linha}>{line.linha}</Text>
-                <Text style={styles.horarios}>
-                    Próxima ída:{" "}
-                    <Text style={styles.horario}>{line.horarios.proxIda}</Text>
-                </Text>
-                <Text style={styles.horarios}>
-                    Próxima volta:{" "}
-                    <Text style={styles.horario}>
-                        {line.horarios.proxVolta}
+                <LinearGradient
+                    colors={["#fac97a", "#fcb23a", "#ff9d00"]}
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        borderRadius: 10,
+                        marginHorizontal: 20,
+                        marginVertical: 10,
+                        paddingVertical: 10,
+                    }}
+                >
+                    <Text style={styles.linha}>{line.linha}</Text>
+                    <Text style={styles.horarios}>
+                        Próxima ída:{" "}
+                        <Text style={styles.horario}>
+                            {line.horarios.proxIda}
+                        </Text>
                     </Text>
-                </Text>
-            </LinearGradient>
+                    <Text style={styles.horarios}>
+                        Próxima volta:{" "}
+                        <Text style={styles.horario}>
+                            {line.horarios.proxVolta}
+                        </Text>
+                    </Text>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            setModal(false);
+                        }}
+                    >
+                        <View style={styles.modalLine}>
+                            <View style={styles.modalContainer}>
+                                <View style={styles.header}>
+                                    <Text style={styles.appName}>
+                                        Linha {line.linha}
+                                    </Text>
+                                </View>
+                                <View style={styles.content}></View>
+                            </View>
+                            <TouchableHighlight
+                                style={styles.closeBtn}
+                                onPress={() => {
+                                    setModal(false);
+                                }}
+                                underlayColor="#a1a1a1"
+                            >
+                                <AntDesign
+                                    name="close"
+                                    size={24}
+                                    color="#393939"
+                                />
+                            </TouchableHighlight>
+                        </View>
+                    </Modal>
+                </LinearGradient>
+            </TouchableHighlight>
         );
     });
 
@@ -96,6 +143,40 @@ const styles = StyleSheet.create({
         fontWeight: "100",
         color: "#fff",
         fontSize: 16,
+    },
+    modalLine: {
+        position: "absolute",
+        bottom: 0,
+        width: "100%",
+        height: "70%",
+        backgroundColor: "#fff",
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+    },
+    closeBtn: {
+        position: "absolute",
+        padding: 10,
+        borderRadius: 32,
+        right: 0,
+        marginTop: 5,
+        marginRight: 5,
+        backgroundColor: "#fff",
+    },
+    modalContainer: {
+        flex: 1,
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginRight: 20,
+        padding: 5,
+    },
+    appName: {
+        fontSize: 36,
+        fontWeight: "bold",
+    },
+    content: {
+        borderTopWidth: 2,
     },
 });
 
