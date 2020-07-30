@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     StyleSheet,
@@ -12,6 +12,13 @@ import Linhas from "./Linhas";
 
 export default function Drawer(stateLines) {
     const [modalVisible, setModal] = useState(false);
+    const [stateLine, setState] = useState();
+
+    useEffect(() => {
+        if (!modalVisible) {
+            setState(stateLines);
+        }
+    });
 
     return (
         <View style={styles.container}>
@@ -29,7 +36,7 @@ export default function Drawer(stateLines) {
                             <Text style={styles.appName}>Cadê o Busão?</Text>
                         </View>
                         <ScrollView style={styles.content}>
-                            <Linhas stateLines={stateLines} />
+                            <Linhas stateLines={stateLine} />
                         </ScrollView>
                     </View>
                     <TouchableHighlight
